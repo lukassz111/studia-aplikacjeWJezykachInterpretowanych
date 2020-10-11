@@ -1,0 +1,72 @@
+@import './vars.css';
+@import './sections.css';
+
+html {
+    width: 98vw;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background-color: var(--color-background);
+    color: var(--color-font);
+    font-family: var(--font-family);
+    overflow-x: hidden;
+}
+a[href] {
+    color: var(--color-link);
+}
+a[href]:hover {
+    color: var(--color-link-hover);
+}
+
+header {
+    background-color: var(--color-background);
+    box-sizing: border-box;
+    width: 100vw;
+    height: 8vh;
+    padding: 1vh 5vw;
+    position: fixed;
+    top: 0;
+    font-size: 4vh;
+    z-index: 2;
+}
+body > nav {
+    box-sizing: border-box;
+    width: 100vw;
+    padding: 8.5vh 5vw 1vh 5vw;
+    font-size: 3vh;
+}
+
+footer {
+    box-sizing: border-box;
+    width: 100vw;
+    padding: 1vh 5vw;
+    font-size: 3vh;
+}
+
+
+@media (max-width: 300px) {
+    header {
+        height: 25vh;
+    }
+    body > nav {
+        padding-top: 25.5vh;
+    }
+}
+@media (min-width: 300.0001px) and (max-width: 500px) {
+    header {
+        height: 12vh;
+    }
+    body > nav {
+        padding-top: 12.5vh;
+    }
+}
+@media (min-width: 500.0001px) and (max-width: 700px) {
+}
+@media (min-width: 700.0001px) and (max-width: 1200px) {
+}
