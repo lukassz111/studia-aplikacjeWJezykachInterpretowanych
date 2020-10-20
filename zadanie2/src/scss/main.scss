@@ -1,0 +1,92 @@
+@import 'var';
+
+main {
+    font-size: 2rem;
+    padding-left: 10vw;
+    padding-right: 10vw
+}
+
+main>* {
+    margin-top: 1em;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: $background;
+    padding: 1%;
+}
+
+
+main>div {
+    width: 100%;
+}
+
+
+
+
+#todoList-view {
+    width: 100%;
+
+    & > div {
+        box-sizing: border-box;
+        width: 100%;
+        background: $todo-background;
+        border-radius: 3vw;
+        padding: 3vw;
+        margin-bottom: 1vh;
+        transition: 0.5s;
+
+        &:hover {
+            background: $todo-background-hover;
+        }
+    }
+
+    div {
+        div {
+        }
+
+        .todo-title {
+        }
+
+        .todo-description {
+        }
+
+        .todo-place {
+        }
+
+        .todo-dueDate {
+        }
+
+        .todo-deleteBtn {
+        }
+    }
+
+    /*
+    tr {
+        $sizeTitle: 20%;
+        $sizeDescription:40%;
+        $sizePlace: 20%;
+        $sizeDueDate: 10%;
+        $sizeDeleteBtn: 100% - ($sizeTitle+$sizeDescription+$sizePlace+$sizeDueDate);
+
+        td:nth-child(1) {
+            background: red;
+            width: $sizeTitle;
+        }
+        td:nth-child(2) {
+            background: gray;
+            width: $sizeDescription;
+        }
+        td:nth-child(3) {
+            background: green;
+            width: $sizePlace;
+        }
+        td:nth-child(4) {
+            background: yellow;
+            width: $sizeDueDate;
+        }
+        td:nth-child(5) {
+            background: yellowgreen;
+            width: $sizeDeleteBtn;
+        }
+    }
+*/
+}

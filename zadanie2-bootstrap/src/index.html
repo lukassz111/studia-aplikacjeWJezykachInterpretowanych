@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="utf-8" />
+    <!--<script src="http://localhost:35729/livereload.js"></script>-->
+
+    <script src="https://unpkg.com/jquery@3.5.1/dist/jquery.js"></script>
+    <script src="scripts.js"></script>
+    <script src="https://unpkg.com/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap@4.5.0/dist/css/bootstrap.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css "
+        rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Lista wydarzeń</title>
+</head>
+
+<body class="container-fluid">
+    <header class="jumbotron">
+        <div class="container">
+            <h1 class="display-4">Lista wydarzeń</h1>
+        </div>
+    </header>
+    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Wystąpił problem</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="errorModalBody">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <main class="container-fluid">
+        <div class="card">
+            <div class="card-body">
+                <div class="btn-group mb-4">
+                    <input type="button" id="fetchInternetBtn" class="btn btn-primary"
+                        value="Pobierz z serwera i zapisz lokalnie" />
+                    <input type="button" id="saveInternetBtn" class="btn btn-secondary" value="Zapisz na serwerze" />
+                </div>
+                <form id="filter-form" class="input-group">
+                    <input type="text" id="serach" class="form-control" aria-label="Wyszukaj" placeholder="Wyszukaj" />
+                    <div class="input-group-append">
+                        <input type="button" value="Szukaj" id="serachBtn" class="btn btn-primary" />
+                    </div>
+                </form>
+                <div class="">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Tytuł</th>
+                                <th>Opis</th>
+                                <th>Miejsce</th>
+                                <th>Dzień</th>
+                            </tr>
+                        </thead>
+                        <tbody id="todoList-view"></tbody>
+                    </table>
+                </div>
+                <form id="add-form">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Tytuł</span>
+                        </div>
+                        <input type="text" id="inputTitle" class="form-control" />
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Opis</span>
+                        </div>
+                        <input type="text" id="inputDescription" class="form-control" />
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Miejsce</span>
+                        </div>
+                        <input type="text" id="inputPlace" class="form-control" />
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Data</span>
+                        </div>
+                        <input type="date" id="inputDate" class="form-control" />
+                    </div>
+                    <input type="button" value="Dodaj" id="addBtn" class="btn btn-primary btn-block" />
+                </form>
+            </div>
+        </div>
+    </main>
+    <footer class="jumbotron text-right">
+        <div class="container">
+            <p class="lead">Łukasz Narloch 224384</p>
+        </div>
+    </footer>
+</body>
+
+</html>

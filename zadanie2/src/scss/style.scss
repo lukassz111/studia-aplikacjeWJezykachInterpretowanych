@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+@import 'input';
+
+*::selection {
+    color: inherit;
+    background: inherit;
+}
+
+body {
+    background: $background;
+    color: $font;
+    font-family: $font-family;
+    margin: 0;
+    border: 0;
+    width: 100vw;
+}
+
+header {
+    font-size: 3em;
+    text-align: center;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+}
+
+@import 'main';
+
+footer {
+    font-size: 1.5em;
+    text-align: right;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    padding-right: 2vw;
+}

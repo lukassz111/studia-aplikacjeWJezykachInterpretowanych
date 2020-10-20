@@ -1,0 +1,111 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap");
+input {
+  padding: 8px;
+  font-size: 0.8rem;
+  font-weight: 900;
+  color: #f8f8f2;
+  text-align: center;
+  position: relative;
+  top: -0.3em;
+  background: #44475a;
+  border-radius: 0.5rem;
+  border-width: 1px;
+  border-color: #44475a; }
+  input::selection {
+    color: #44475a;
+    background: #f8f8f2; }
+
+input[type="button"] {
+  text-transform: uppercase;
+  transition: 0.5s; }
+  input[type="button"]:hover, input[type="button"]:active {
+    border-color: #50fa7b;
+    background: #50fa7b; }
+    input[type="button"]:hover.warning, input[type="button"]:active.warning {
+      border-color: #ff5555;
+      background: #ff5555; }
+
+*::selection {
+  color: inherit;
+  background: inherit; }
+
+body {
+  background: #282a36;
+  color: #f8f8f2;
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  border: 0;
+  width: 100vw; }
+
+header {
+  font-size: 3em;
+  text-align: center;
+  padding-top: 2vh;
+  padding-bottom: 2vh; }
+
+main {
+  font-size: 2rem;
+  padding-left: 10vw;
+  padding-right: 10vw; }
+
+main > * {
+  margin-top: 1em;
+  border-radius: 10px;
+  border-style: solid;
+  border-color: #282a36;
+  padding: 1%; }
+
+main > div {
+  width: 100%; }
+
+#todoList-view {
+  width: 100%;
+  /*
+    tr {
+        $sizeTitle: 20%;
+        $sizeDescription:40%;
+        $sizePlace: 20%;
+        $sizeDueDate: 10%;
+        $sizeDeleteBtn: 100% - ($sizeTitle+$sizeDescription+$sizePlace+$sizeDueDate);
+
+        td:nth-child(1) {
+            background: red;
+            width: $sizeTitle;
+        }
+        td:nth-child(2) {
+            background: gray;
+            width: $sizeDescription;
+        }
+        td:nth-child(3) {
+            background: green;
+            width: $sizePlace;
+        }
+        td:nth-child(4) {
+            background: yellow;
+            width: $sizeDueDate;
+        }
+        td:nth-child(5) {
+            background: yellowgreen;
+            width: $sizeDeleteBtn;
+        }
+    }
+*/ }
+  #todoList-view > div {
+    box-sizing: border-box;
+    width: 100%;
+    background: #534641;
+    border-radius: 3vw;
+    padding: 3vw;
+    margin-bottom: 1vh;
+    transition: 0.5s; }
+    #todoList-view > div:hover {
+      background: #947151; }
+
+footer {
+  font-size: 1.5em;
+  text-align: right;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  padding-right: 2vw; }
+
+/*# sourceMappingURL=style.css.map */

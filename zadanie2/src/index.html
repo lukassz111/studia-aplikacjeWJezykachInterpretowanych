@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="utf-8"/>
+
+    <script src="http://localhost:35729/livereload.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://unpkg.com/jquery@3.5.1/dist/jquery.js"></script>
+    <script src="scripts.js"></script>
+    <title>Lista wydarzeń</title>
+</head>
+
+<body>
+    <header>
+        Lista wydarzeń
+    </header>
+    <main>
+        <div>
+            <input type="button" id="fetchInternetBtn" value="Pobierz z serwera i zapisz lokalnie"/>
+            <input type="button" id="saveInternetBtn" value="Zapisz na serwerze"/>
+        </div>
+        <form id="filter-form">
+            <label>Wyszukaj</label>
+            <input type="text" id="serach"/>
+            <input type="button" value="Szukaj" id="serachBtn"/>
+        </form>
+        <div>
+            <div id="todoList-view"></div>
+        </div>
+        <form id="add-form">
+            <label>Tytuł</label>
+            <input type="text" id="inputTitle"/>
+            <label>Opis</label>
+            <input type="text" id="inputDescription"/>
+            <label>Miejsce</label>
+            <input type="text" id="inputPlace"/>
+            <label>Data</label>
+            <input type="date" id="inputDate"/>
+            <input type="button" value="Dodaj" id="addBtn"/>
+        </form>
+    </main>
+    <footer>
+        Łukasz Narloch 224384
+    </footer>
+    
+</body>
+
+</html>

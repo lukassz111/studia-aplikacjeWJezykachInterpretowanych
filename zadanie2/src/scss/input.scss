@@ -1,0 +1,35 @@
+@import 'var';
+
+input {
+    padding: 8px;
+    font-size: 0.8rem;
+    font-weight: 900;
+    color: $font;
+    text-align: center;
+    position: relative;
+    top: -0.3em;
+    background: $button-background;
+    border-radius: 0.5rem;
+    border-width: 1px;
+    border-color: $button-background;
+    
+    &::selection {
+        color: $button-background;
+        background: $font;
+    }
+}
+
+
+input[type="button"] {
+    text-transform: uppercase;
+    transition: 0.5s;
+
+    &:hover,&:active {
+        border-color: $green;
+        background: $green;
+        &.warning {
+            border-color: $red;
+            background: $red;
+        }
+    }
+}
