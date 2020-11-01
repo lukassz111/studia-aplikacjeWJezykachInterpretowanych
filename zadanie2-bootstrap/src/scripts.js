@@ -8,7 +8,6 @@ const secretKey = "$2b$10$l5RmfbWA5ai7j9g01fwlM.tsfI4179haJqdTve3LYz6qWS8uBVdlq"
 let jsonBinUrl = "https://api.jsonbin.io/b/" + binId;
 let todoList = [];
 
-
 function initialize() {
     fetchLocal();
 }
