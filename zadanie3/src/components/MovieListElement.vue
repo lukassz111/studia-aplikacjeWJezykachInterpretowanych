@@ -4,13 +4,13 @@
             {{movie['title']}}
         </td>
         <td>
+            {{movie['cast'].join(", ")}}
+        </td>
+        <td>
+            {{movie['genres'].join(", ")}}
+        </td>
+        <td>
             {{movie['year']}}
-        </td>
-        <td>
-            {{JSON.stringify(movie['cast'])}}
-        </td>
-        <td>
-            {{JSON.stringify(movie['genres'])}}
         </td>
     </tr>
 </template>

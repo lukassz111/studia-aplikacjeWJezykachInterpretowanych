@@ -1,19 +1,31 @@
 <template>
   <div id="movieList">
-    <table border="1">
-      <tr>
-        <td>title</td><td>year</td><td>cast</td><td>genres</td>
-      </tr>
-      <MovieListElement v-for="mov in movies" v-bind:key="mov" :movie="mov"></MovieListElement>
+    <table>
+      <thead>
+        <tr>
+          <th>Tytuł</th>
+          <th>Obsada</th>
+          <th>Gatunek</th>
+          <th>Rok</th>
+        </tr>
+      </thead>
+      <tbody>
+        <MovieListElement v-for="mov in movies" v-bind:key="mov" :movie="mov"></MovieListElement>
+      </tbody>
     </table>
     <div>
-      <button v-on:click="prevPage">prev</button><span>{{page}}</span><button v-on:click="nextPage">next</button>
+      <button class="btn" v-on:click="firstPage">Początek</button>
+      <button class="btn" v-on:click="prevPage">Poprzednia strona</button>
+      <label class="btn">Strona: {{page}}</label>
+      <button class="btn" v-on:click="nextPage">Następna strona</button>
+      <button class="btn" v-on:click="lastPage">Ostania strona</button>
     </div>
+    
   </div>
 </template>
 
 <script>
-import { MovieService } from '../MovieService'
+import { MovieService } from '../services/MovieService'
 import MovieListElement from './MovieListElement'
 
 export default {
@@ -29,19 +41,19 @@ export default {
     }
   },
   methods: {
-    nextPage: (event) => {
+    nextPage: () => {
       MovieService.page = MovieService.page + 1
       MovieService.listUpdate()
     },
-    prevPage: (event) => {
+    prevPage: () => {
       MovieService.page = MovieService.page - 1
       MovieService.listUpdate()
     },
-    lastPage: (event) => {
+    lastPage: () => {
       MovieService.page = MovieService.getLastPageNumber()
       MovieService.listUpdate()
     },
-    firstPage: (event) => {
+    firstPage: () => {
       MovieService.page = 0
       MovieService.listUpdate()
     }
@@ -61,8 +73,21 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-#movieList, #movieList > table, #movieList > div {
-  margin: 0 auto;
+<style scoped lang="scss">
+@import '../scss/button';
+#movieList {
+  width: 100%;
+  & > table {
+    width: 100%;
+    th {
+      text-align: left;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+  }
+  & > div {
+    width: 100%;
+    padding-top: 30px;
+  }
 }
 </style>
