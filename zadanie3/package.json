@@ -1,7 +1,7 @@
 {
   "name": "zadanie3",
   "version": "1.0.0",
-  "description": "Zadanie 3 na AJI",
+  "description": "A Vue.js project",
   "author": "Łukasz Narloch <lukassz111@gmail.com>",
   "private": true,
   "scripts": {
@@ -11,8 +11,11 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "es6-promise": "^4.2.8",
+    "rxjs": "^6.6.3",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vuex": "^3.5.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

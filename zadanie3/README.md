@@ -1,6 +1,6 @@
 # zadanie3
 
-> Zadanie 3 na AJI
+> A Vue.js project
 
 ## Build Setup
 
