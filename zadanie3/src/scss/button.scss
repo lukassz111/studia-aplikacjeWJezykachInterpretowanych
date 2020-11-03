@@ -1,0 +1,25 @@
+@import './theme.scss';
+@import './functions.scss';
+.btn {
+    @include boxSizing(border-box);
+    background: darken($c-green, 30);
+    color: $c-foreground;
+    font-weight: 900;
+    font-family: $f-family;
+    font-size: 1rem;
+    border-width: 0px;
+    padding: 0.2rem 0.5rem;
+    vertical-align: middle;
+    height: 3rem;
+    border-radius: 20px;
+    margin: 0 5px;
+    transition: 100ms;
+}
+label.btn {
+    padding: 0.9rem;
+}
+button.btn {
+    &:hover {
+        background: $c-green;
+    }
+}

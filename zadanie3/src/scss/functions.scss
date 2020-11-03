@@ -1,0 +1,11 @@
+
+@mixin boxShadow($horizontalLength,$verticalLength,$blurRadius,$spreadRadius,$shadowColor) {
+    -webkit-box-shadow: $horizontalLength $verticalLength $blurRadius $spreadRadius $shadowColor;
+    -moz-box-shadow: $horizontalLength $verticalLength $blurRadius $spreadRadius $shadowColor;
+    box-shadow: $horizontalLength $verticalLength $blurRadius $spreadRadius $shadowColor;
+}
+@mixin boxSizing($mode) {
+    -webkit-box-sizing: $mode;
+    -moz-box-sizing: $mode;
+    box-sizing: $mode;
+}
