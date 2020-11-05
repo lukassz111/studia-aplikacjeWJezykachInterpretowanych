@@ -1,35 +1,17 @@
 <template>
-  <div>
-    <div id="header">Lista filmów</div>
-    <div id="content">
+  <md-app>
+    <md-app-toolbar class="md-primary">
+        <span class="md-title">Baza filmów</span>
+      </md-app-toolbar>
+    <md-app-content>
       <router-view/>
-    </div>
-  </div>
+    </md-app-content>
+  </md-app>
 </template>
 
 <style lang="scss">
-@import './scss/theme.scss';
-@import './scss/functions.scss';
-body {
-  @include boxSizing(border-box);
-  background: $c-background;
-  color: $c-foreground;
+@import './scss/theme';
+* {
   font-family: $f-family;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 15pt;
-  #header {
-    @include boxSizing(border-box);
-    width: 100%;
-    padding: 2%;
-    font-size: 2rem;
-    @include boxShadow(0px,21px,70px,-22px,rgba(0,0,0,0.84));
-  }
-  #content {
-    @include boxSizing(border-box);
-    width: 100%;
-    padding: 5% 2% 2% 2%;
-  }
 }
 </style>

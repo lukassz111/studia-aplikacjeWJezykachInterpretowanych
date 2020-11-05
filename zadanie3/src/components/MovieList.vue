@@ -1,27 +1,35 @@
 <template>
-  <div id="movieList">
-    <table>
-      <thead>
-        <tr>
-          <th>Tytuł</th>
-          <th>Obsada</th>
-          <th>Gatunek</th>
-          <th>Rok</th>
-        </tr>
-      </thead>
-      <tbody>
+  <md-card id="movieList">
+    <md-card-header>
+      <div class="md-title">Lista filmów</div>
+    </md-card-header>
+    <md-card-content>
+      <md-table>
+        <md-table-row>
+          <md-table-head>Tytuł</md-table-head>
+          <md-table-head>Obsada</md-table-head>
+          <md-table-head>Gatunek</md-table-head>
+          <md-table-head>Rok</md-table-head>
+        </md-table-row>
         <MovieListElement v-for="mov in movies" v-bind:key="mov" :movie="mov"></MovieListElement>
-      </tbody>
-    </table>
-    <div>
-      <button class="btn" v-on:click="firstPage">Początek</button>
-      <button class="btn" v-on:click="prevPage">Poprzednia strona</button>
-      <label class="btn">Strona: {{page}}</label>
-      <button class="btn" v-on:click="nextPage">Następna strona</button>
-      <button class="btn" v-on:click="lastPage">Ostania strona</button>
-    </div>
-    
-  </div>
+      </md-table>
+    </md-card-content>
+    <md-card-actions>
+      <md-button v-on:click="firstPage">
+        <md-icon>fast_rewind</md-icon>
+      </md-button>
+      <md-button v-on:click="prevPage">
+        <md-icon>navigate_before</md-icon>
+      </md-button>
+      <md-button disabled>Strona: {{page}}</md-button>
+      <md-button v-on:click="nextPage">
+        <md-icon>navigate_next</md-icon>
+      </md-button>
+      <md-button v-on:click="lastPage">
+        <md-icon>fast_forward</md-icon>
+      </md-button>
+    </md-card-actions>
+  </md-card>
 </template>
 
 <script>
@@ -72,22 +80,5 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-@import '../scss/button';
-#movieList {
-  width: 100%;
-  & > table {
-    width: 100%;
-    th {
-      text-align: left;
-      font-weight: bold;
-      font-size: 1rem;
-    }
-  }
-  & > div {
-    width: 100%;
-    padding-top: 30px;
-  }
-}
 </style>

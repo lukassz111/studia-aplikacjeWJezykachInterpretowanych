@@ -1,18 +1,18 @@
 <template>
-    <tr>
-        <td>
+    <md-table-row>
+        <md-table-cell>
             {{movie['title']}}
-        </td>
-        <td>
+        </md-table-cell>
+        <md-table-cell>
             {{movie['cast'].join(", ")}}
-        </td>
-        <td>
+        </md-table-cell>
+        <md-table-cell>
             {{movie['genres'].join(", ")}}
-        </td>
-        <td>
+        </md-table-cell>
+        <md-table-cell>
             {{movie['year']}}
-        </td>
-    </tr>
+        </md-table-cell>
+    </md-table-row>
 </template>
 
 <script>
