@@ -11,7 +11,4 @@
 
 <style lang="scss">
 @import './scss/theme';
-* {
-  font-family: $f-family;
-}
 </style>

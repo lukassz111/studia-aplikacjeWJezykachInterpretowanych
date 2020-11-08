@@ -1,15 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons');
-
-$c-background: #282a36;
-$c-current-line: #44475a;
-$c-foreground: #f8f8f2;
-$c-comment: #6272a4;
-$c-cyan: #8be9fd;
-$c-green: #50fa7b;
-$c-orange: #ffb86c;
-$c-pink: #080708;
-$c-purple: #bd93f9;
-$c-red: #ff5555;
-$c-yellow: #f1fa8c;
 $f-family: 'Roboto', sans-serif;
+
+* {
+    font-family: $f-family;
+  }

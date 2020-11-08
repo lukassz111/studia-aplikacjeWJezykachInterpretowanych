@@ -3,20 +3,20 @@ import { BehaviorSubject } from 'rxjs'
 import { RequestService } from './RequestService'
 
 class _MovieService {
-  baseUrl = './wikipedia-movie-data/'
-  movies: Array<Movie> = []
-  filteredMovies: Array<Movie> = []
-  movieToDisplay: Array<Movie> = []
-  movieToDisplayObservable: BehaviorSubject<any> = new BehaviorSubject<any>(0)
-  page: number = 0
-  perPage: number = 10
+  private baseUrl: string = './wikipedia-movie-data/'
+  private movies: Array<Movie> = []
+  private filteredMovies: Array<Movie> = []
+  public movieToDisplay: Array<Movie> = []
+  public movieToDisplayObservable: BehaviorSubject<any> = new BehaviorSubject<any>(0)
+  public page: number = 0
+  private perPage: number = 10
 
-  getLastPageNumber (): number {
+  public getLastPageNumber (): number {
     let m = this.filteredMovies.length % this.perPage
     return (this.filteredMovies.length - m) / this.perPage
   }
 
-  listUpdate (): void {
+  public listUpdate (): void {
     if (this.page < 0) {
       this.page = 0
     } else if (this.page > this.getLastPageNumber()) {
@@ -32,7 +32,7 @@ class _MovieService {
     this.movieToDisplayObservable.next(0)
   }
 
-  loadMovies (): void {
+  public loadMovies (): void {
     let url = this.baseUrl + 'movies.json'
     RequestService.get(url).then((response) => {
       let jsonMovies: Array<any> = JSON.parse(response as string)
@@ -44,7 +44,7 @@ class _MovieService {
     })
   }
 
-  setFilter(title: string,cast: string,genre: string,year: string): void {
+  public setFilter(title: string,cast: string,genre: string,year: string): void {
 
     let regexCreator = (str:string) => {
       let t: string = str.trim();
