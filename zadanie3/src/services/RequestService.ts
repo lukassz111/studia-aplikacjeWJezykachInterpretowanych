@@ -1,5 +1,5 @@
 class _RequestService {
-  request (method, url) {
+  request (method: string, url: string) {
     return new Promise(function (resolve, reject) {
       var xhr = new XMLHttpRequest()
       xhr.open(method, url)
@@ -26,7 +26,7 @@ class _RequestService {
       xhr.send()
     })
   }
-  get (url) {
+  get (url:string) {
     return this.request('GET', url)
   }
 }

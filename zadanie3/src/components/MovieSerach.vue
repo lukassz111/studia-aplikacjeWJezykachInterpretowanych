@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { MovieService } from '../services/MovieService'
+import { MovieService } from '../services/MovieService.ts'
   export default {
     name: 'MovieSerach',
     props: {
@@ -38,6 +38,18 @@ import { MovieService } from '../services/MovieService'
       year: Number
     },
     updated () {
+      if(this.title == undefined) {
+        this.title = ''
+      }
+      if(this.cast == undefined) {
+        this.cast = ''
+      }
+      if(this.genre == undefined) {
+        this.genre = ''
+      }
+      if(this.year == undefined) {
+        this.year = ''
+      }
       MovieService.setFilter(this.title,this.cast,this.genre,this.year)
     }
   }

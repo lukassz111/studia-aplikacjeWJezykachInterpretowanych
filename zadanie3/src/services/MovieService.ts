@@ -3,19 +3,19 @@ import { RequestService } from './RequestService'
 
 class _MovieService {
   baseUrl = './wikipedia-movie-data/'
-  movies = []
-  filteredMovies = []
-  movieToDisplay = []
-  movieToDisplayObservable = new BehaviorSubject()
-  page = 0
-  perPage = 10
+  movies: Array<Map<string,string>> = []
+  filteredMovies: Array<Map<string,string>> = []
+  movieToDisplay: Array<Map<string,string>> = []
+  movieToDisplayObservable: BehaviorSubject<any> = new BehaviorSubject<any>(0)
+  page: number = 0
+  perPage: number = 10
 
-  getLastPageNumber () {
+  getLastPageNumber (): number {
     let m = this.filteredMovies.length % this.perPage
     return (this.filteredMovies.length - m) / this.perPage
   }
 
-  listUpdate () {
+  listUpdate (): void {
     if (this.page < 0) {
       this.page = 0
     } else if (this.page > this.getLastPageNumber()) {
@@ -23,26 +23,34 @@ class _MovieService {
     }
 
     this.movieToDisplay = []
-    let begin = this.page * this.perPage
-    let end = begin + this.perPage
+    let begin: number = this.page * this.perPage
+    let end: number = begin + this.perPage
     for (let i = begin; i < end; i++) {
       this.movieToDisplay.push(this.filteredMovies[i])
     }
-    this.movieToDisplayObservable.next()
+    this.movieToDisplayObservable.next(0)
   }
 
-  loadMovies () {
+  loadMovies (): void {
     let url = this.baseUrl + 'movies.json'
     RequestService.get(url).then((response) => {
-      this.movies = JSON.parse(response)
+      this.movies = JSON.parse(response as string)
       this.page = 0
       this.setFilter("","","","")
     })
   }
 
-  setFilter(title,cast,genre,year) {
+  setFilter(title: string,cast: string,genre: string,year: string): void {
     console.log({"title":title,"cast":cast,"genre":genre,"year":year})
-    this.filteredMovies = this.movies;
+    title = title.trim();
+    cast = cast.trim();
+    genre = genre.trim();
+    year = year.trim();
+    if(title === '' && cast === '' && genre === '' && year === '') {
+      this.filteredMovies = this.movies;
+    } else {
+      this.filteredMovies = [];
+    }
     this.listUpdate();
   }
 }
