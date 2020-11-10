@@ -1,10 +1,10 @@
 import Movie from '../model/Movie'
 import { BehaviorSubject, Observable } from 'rxjs'
 import { RequestService } from './RequestService'
-import { clone,slice } from 'lodash';
+import { clone,cloneDeep,slice } from 'lodash';
 
 class _MovieService {
-  private moviesLoaded: boolean = false;
+  //private moviesLoaded: boolean = false;
   private baseUrl: string = './wikipedia-movie-data/'
   private movies: Array<Movie> = []
   private filteredMovies: Array<Movie> = []
@@ -14,7 +14,7 @@ class _MovieService {
     return this.update;
   }
   public get Movies(): Array<Movie> {
-    return clone(this.movies);
+    return cloneDeep(this.movies)
   }
   public page: number = 0
   private perPage: number = 10
@@ -25,6 +25,7 @@ class _MovieService {
   }
 
   public listUpdate (): void {
+    //console.log("listUpdate")
     if (this.page < 0) {
       this.page = 0
     } else if (this.page > this.getLastPageNumber()) {
@@ -38,19 +39,22 @@ class _MovieService {
   }
 
   public loadMovies (): void {
-    if(this.moviesLoaded) {
-      return;
-    }
+    //console.log({"load":this.moviesLoaded})
+    //if(this.moviesLoaded) {
+    //  this.listUpdate()
+    //  return
+    //}
     let url = this.baseUrl + 'movies.json'
     RequestService.get(url).then((response) => {
       let jsonMovies: Array<any> = JSON.parse(response as string)
       this.movies = jsonMovies.map<Movie>((v: any, i:number)=>{
         return new Movie(v['title'],v['cast'],v['genres'],parseInt(v['year']))
       });
+      console.log({loaded:this.movies})
       this.page = 0
       this.setFilter("","","","")
     })
-    this.moviesLoaded = true;
+    //this.moviesLoaded = true;
   }
 
   public setFilter(title: string,cast: string,genre: string,year: string): void {
