@@ -67,7 +67,7 @@ export default {
     }
   },
   created () {
-    this.subscription = MovieService.movieToDisplayObservable.subscribe(() => {
+    this.subscription = MovieService.Update.subscribe(() => {
       this.movies = MovieService.movieToDisplay
       this.page = MovieService.page
     })

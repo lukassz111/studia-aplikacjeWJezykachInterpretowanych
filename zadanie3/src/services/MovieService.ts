@@ -1,13 +1,21 @@
 import Movie from '../model/Movie'
-import { BehaviorSubject } from 'rxjs'
+import { BehaviorSubject, Observable } from 'rxjs'
 import { RequestService } from './RequestService'
+import { clone,slice } from 'lodash';
 
 class _MovieService {
+  private moviesLoaded: boolean = false;
   private baseUrl: string = './wikipedia-movie-data/'
   private movies: Array<Movie> = []
   private filteredMovies: Array<Movie> = []
   public movieToDisplay: Array<Movie> = []
-  public movieToDisplayObservable: BehaviorSubject<any> = new BehaviorSubject<any>(0)
+  private update: BehaviorSubject<any> = new BehaviorSubject<any>(0)
+  public get Update(): Observable<any> {
+    return this.update;
+  }
+  public get Movies(): Array<Movie> {
+    return clone(this.movies);
+  }
   public page: number = 0
   private perPage: number = 10
 
@@ -23,16 +31,16 @@ class _MovieService {
       this.page = this.getLastPageNumber()
     }
 
-    this.movieToDisplay = []
     let begin: number = this.page * this.perPage
     let end: number = begin + this.perPage
-    for (let i = begin; i < end; i++) {
-      this.movieToDisplay.push(this.filteredMovies[i])
-    }
-    this.movieToDisplayObservable.next(0)
+    this.movieToDisplay = slice(this.filteredMovies,begin,end);
+    this.update.next(0)
   }
 
   public loadMovies (): void {
+    if(this.moviesLoaded) {
+      return;
+    }
     let url = this.baseUrl + 'movies.json'
     RequestService.get(url).then((response) => {
       let jsonMovies: Array<any> = JSON.parse(response as string)
@@ -42,6 +50,7 @@ class _MovieService {
       this.page = 0
       this.setFilter("","","","")
     })
+    this.moviesLoaded = true;
   }
 
   public setFilter(title: string,cast: string,genre: string,year: string): void {
@@ -70,7 +79,7 @@ class _MovieService {
     genre = genre.trim();
     year = year.trim();
     if(title === '' && cast === '' && genre === '' && year === '') {
-      this.filteredMovies = this.movies;
+      this.filteredMovies = clone(this.movies);
     } else {
       //Initialize filter
       this.filteredMovies = this.movies;
