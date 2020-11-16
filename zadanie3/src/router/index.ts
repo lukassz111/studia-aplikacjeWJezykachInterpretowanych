@@ -14,6 +14,11 @@ const routes = [
     path: '/by_genre',
     name: 'MovieListByGenrePage',
     component: () => import(/* webpackChunkName: "about" */ '../views/MovieListByGenrePage.vue')
+  },
+  {
+    path: '/by_cast',
+    name: 'MovieListByCastPage',
+    component: () => import(/* webpackChunkName: "about" */ '../views/MovieListByCastPage.vue')
   }
 ]
 

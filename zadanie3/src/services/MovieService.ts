@@ -16,24 +16,46 @@ class _MovieService {
   public get Movies(): Array<Movie> {
     return cloneDeep(this.movies)
   }
-  public page: number = 0
-  private perPage: number = 10
+  private _page: number = 0
+
+  public get Page(): number {
+    if (this._page < 0) {
+      this._page = 0
+    } else if (this._page > this.getLastPageNumber()) {
+      this._page = this.getLastPageNumber()
+    }
+    return this._page;
+  }
+  public set Page(value: number) {
+    this._page = value;
+    if (this._page < 0) {
+      this._page = 0
+    } else if (this._page > this.getLastPageNumber()) {
+      this._page = this.getLastPageNumber()
+    }
+  }
+
+  private _perPage: number = 10
+  public get PerPage(): number {
+    return this._perPage;
+  }
+  public set PerPage(value: number) {
+    this._perPage = value;
+    if(this._perPage < 10) {
+      this._perPage = 10
+    }
+    let temp = this.Page;
+    this.Page = temp;
+  }
 
   public getLastPageNumber (): number {
-    let m = this.filteredMovies.length % this.perPage
-    return (this.filteredMovies.length - m) / this.perPage
+    let m = this.filteredMovies.length % this.PerPage
+    return (this.filteredMovies.length - m) / this.PerPage
   }
 
   public listUpdate (): void {
-    //console.log("listUpdate")
-    if (this.page < 0) {
-      this.page = 0
-    } else if (this.page > this.getLastPageNumber()) {
-      this.page = this.getLastPageNumber()
-    }
-
-    let begin: number = this.page * this.perPage
-    let end: number = begin + this.perPage
+    let begin: number = this.Page * this.PerPage
+    let end: number = begin + this.PerPage
     this.movieToDisplay = slice(this.filteredMovies,begin,end);
     this.update.next(0)
   }
@@ -51,14 +73,15 @@ class _MovieService {
         return new Movie(v['title'],v['cast'],v['genres'],parseInt(v['year']))
       });
       console.log({loaded:this.movies})
-      this.page = 0
+      this.Page = 0
+      this.PerPage = 10
       this.setFilter("","","","")
     })
     //this.moviesLoaded = true;
   }
 
   public setFilter(title: string,cast: string,genre: string,year: string): void {
-
+    console.log("old: "+this.getLastPageNumber().toString());
     let regexCreator = (str:string) => {
       let t: string = str.trim();
       while(t.match(RegExp(' {2}')) != null) {
@@ -167,6 +190,7 @@ class _MovieService {
       //TODO add more 
     }
     this.listUpdate();
+    console.log("new: "+this.getLastPageNumber().toString());
   }
 }
 const MovieService = new _MovieService()
