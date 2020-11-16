@@ -1,7 +1,7 @@
 import Movie from '../model/Movie'
 import { BehaviorSubject, Observable } from 'rxjs'
 import { RequestService } from './RequestService'
-import { clone,cloneDeep,slice } from 'lodash';
+import { clone,cloneDeep,filter,slice } from 'lodash';
 
 class _MovieService {
   //private moviesLoaded: boolean = false;
@@ -82,7 +82,7 @@ class _MovieService {
 
   public setFilter(title: string,cast: string,genre: string,year: string): void {
     console.log("old: "+this.getLastPageNumber().toString());
-    let regexCreator = (str:string) => {
+    let regexCreator = (str:string): RegExp => {
       let t: string = str.trim();
       while(t.match(RegExp(' {2}')) != null) {
         t = t.replace('  ',' ');
@@ -114,78 +114,50 @@ class _MovieService {
       //Title filter
       if(title != '') {
         let titleRegEx = regexCreator(title)
-        this.filteredMovies.forEach((movie: Movie,index: number) => {
-          if(movie.title.match(titleRegEx) != null) {
-            filtered.push(movie);
-          }
+        this.filteredMovies = filter<Movie>(this.filteredMovies,(value:Movie) => {
+          return value.title.match(titleRegEx) != null
         })
-        this.filteredMovies = filtered;
-        filtered = []
       }
       //Year filter
       if(year != '') {
         let yearRegEx = regexCreator(year)
-        this.filteredMovies.forEach((movie: Movie,index: number) => {
-          if(movie.year.toString().match(yearRegEx) != null) {
-            filtered.push(movie);
-          }
+        this.filteredMovies = filter<Movie>(this.filteredMovies,(value: Movie) => {
+          return value.year.toString().match(yearRegEx) != null
         })
-        this.filteredMovies = filtered;
-        filtered = []
       }
       //Genre filter
       if(genre != '') {
         let genreFilters: Array<string> = genre.split('/');
-        genreFilters = genreFilters.map((v:string,i:number)=>{
-          return v.trim();
+        let genresRegEx = genreFilters.map((v:string,i:number)=>{
+          return regexCreator(v.trim());
         });
-        this.filteredMovies.forEach((movie:Movie,index:number)=>{
-          let matched: Boolean = false;
-          for(let genreFilter of genreFilters) {
-            let genreRegEx = regexCreator(genreFilter);
-            for(let genre of movie.genres) {
+        genresRegEx.forEach((genreRegEx: RegExp) => {
+          this.filteredMovies = filter<Movie>(this.filteredMovies,(value:Movie) => {
+            for(let genre of value.genres) {
               if(genre.match(genreRegEx) != null) {
-                matched = true;
-                break;
+                return true;
               }
             }
-            if(matched){
-              break
-            }
-          }
-          if(matched) {
-            filtered.push(movie);
-          }
-        });
-        this.filteredMovies = filtered;
-        filtered = [];
+            return false;
+          })
+        })
       }
       //Cast filter
       if(cast != '') {
         let castFilters: Array<string> = cast.split('/');
-        castFilters = castFilters.map((v:string,i:number)=>{
-          return v.trim();
+        let castsRegEx = castFilters.map((v:string,i:number)=>{
+          return regexCreator(v.trim());
         });
-        this.filteredMovies.forEach((movie:Movie,index:number)=>{
-          let matched: Boolean = false;
-          for(let castFilter of castFilters) {
-            let castRegEx = regexCreator(castFilter);
-            for(let cast of movie.cast) {
+        castsRegEx.forEach((castRegEx: RegExp) => {
+          this.filteredMovies = filter<Movie>(this.filteredMovies,(value:Movie) => {
+            for(let cast of value.cast) {
               if(cast.match(castRegEx) != null) {
-                matched = true;
-                break;
+                return true;
               }
             }
-            if(matched){
-              break
-            }
-          }
-          if(matched) {
-            filtered.push(movie);
-          }
-        });
-        this.filteredMovies = filtered;
-        filtered = [];
+            return false;
+          })
+        })
       }
       //TODO add more 
     }
