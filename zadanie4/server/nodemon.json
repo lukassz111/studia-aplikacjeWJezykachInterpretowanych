@@ -1,0 +1,6 @@
+{
+    "watch": ["./src/"],
+    "ext": "ts,json",
+    "ignore": [],
+    "exec": "npm run tslint-fix && ts-node ./src/server.ts"
+}
