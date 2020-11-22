@@ -1,4 +1,6 @@
 import { Request, Response, Application } from "express"
+import { State } from "../entity/State";
+import DatabaseService from "../service/DatabaseService";
 import Controller from "./Controller";
 
 class StatesController extends Controller {
@@ -9,7 +11,9 @@ class StatesController extends Controller {
     }
     
     private getList(req: Request, res: Response) {
-        
+        DatabaseService.Connection.getRepository(State).createQueryBuilder().getMany().then((states) => {
+            res.json(states)
+        })
     }
 }
 

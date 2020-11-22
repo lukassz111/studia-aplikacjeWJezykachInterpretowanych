@@ -1,4 +1,6 @@
 import { Request, Response } from "express"
+import { Product } from "../entity/Product";
+import DatabaseService from "../service/DatabaseService";
 import Controller from "./Controller";
 
 class ProductsController extends Controller {
@@ -18,7 +20,9 @@ class ProductsController extends Controller {
     }
 
     private getList(req: Request, res: Response) {
-
+        DatabaseService.Connection.getRepository(Product).createQueryBuilder().getMany().then((products) => {
+            res.json(products)
+        })
     }
     
     private getElement(req: Request, res: Response, id: string) {

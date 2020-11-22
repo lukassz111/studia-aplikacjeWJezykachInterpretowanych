@@ -1,4 +1,6 @@
-import express ,{ Request, Response, Application } from "express"
+import { Request, Response, Application } from "express"
+import { Order } from "../entity/Order";
+import DatabaseService from "../service/DatabaseService";
 import Controller from "./Controller";
 
 class OrdersController extends Controller {
@@ -17,7 +19,9 @@ class OrdersController extends Controller {
         })
     }
     private getListOrders(req: Request, res: Response) {
-
+        DatabaseService.Connection.getRepository(Order).createQueryBuilder().getMany().then((orders) => {
+            res.json(orders)
+        })
     }
     private addOrder(req: Request, res: Response) {
 

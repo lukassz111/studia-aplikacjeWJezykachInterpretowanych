@@ -1,4 +1,5 @@
-import express, { NextFunction, Request, Response } from "express"
+import express from "express"
+import { NextFunction, Request, Response } from "express"
 import { CategoriesController, OrdersController, ProductsController, RootController, StatesController }
     from "./controller/Controllers"
 import DatabaseService from "./service/DatabaseService"

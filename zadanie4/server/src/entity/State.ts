@@ -5,5 +5,5 @@ import {Entity, PrimaryColumn} from "typeorm";
 @Entity()
 export class State {
     @PrimaryColumn({type: 'varchar', length:20})
-    id: string = ''
+    public id: string = ''
 }

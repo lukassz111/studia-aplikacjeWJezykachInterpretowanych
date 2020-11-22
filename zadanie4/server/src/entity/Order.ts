@@ -14,6 +14,7 @@ export class Order {
     email: string = ''
     @Column()
     phone_number: string = ''
-    
-    
+    //------
+    //ordersList = 0//Lista zamówionych towarów z liczbą zamówionych sztuk
+    //Liczby całkowite dodatnie
 }
