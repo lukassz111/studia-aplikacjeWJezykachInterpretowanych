@@ -1,0 +1,18 @@
+{
+    "category": [
+        "cpu",
+        "motherboard"
+    ],
+    "product": [
+        { "category":"cpu", "name": "Intel Core i5-10600K", "description": "Socket 1200", "price": 1249, "weight": 10 },
+        { "category":"cpu", "name": "Intel Core i9-10850K", "description": "Socket 1200", "price": 2149, "weight": 10 },
+        { "category":"cpu", "name": "AMD Ryzen 5 2600X", "description": "Socket AM4", "price": 639, "weight": 10 },
+        { "category":"cpu", "name": "AMD Ryzen 7 3800X", "description": "Socket AM4", "price": 1499, "weight": 10 },
+        { "category":"motherboard", "name": "Gigabyte B460M DS3H", "description": "Socket 1200, uATX, DDR4", "price": 300, "weight": 500 },
+        { "category":"motherboard", "name": "MSI MPG Z490 GAMING PLUS", "description": "Socket 1200, ATX, DDR4", "price": 499, "weight": 500 },
+        { "category":"motherboard", "name": "ASRock B460 Phantom Gaming 4", "description": "Socket 1200, ATX, DDR4", "price": 399, "weight": 500 },
+        { "category":"motherboard", "name": "Gigabyte B450M DS3H", "description": "Socket AM4, mATX, DDR4", "price": 299, "weight": 500 },
+        { "category":"motherboard", "name": "Gigabyte B450 AORUS ELITE", "description": "Socket AM4, ATX, DDR4", "price": 439, "weight": 500 },
+        { "category":"motherboard", "name": "AMSI B450 GAMING PLUS MAX", "description": "Socket AM4, ATX, DDR4", "price": 399, "weight": 500 },
+    ]
+}

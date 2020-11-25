@@ -15,4 +15,5 @@ class Controller {
     }
     protected initialize() {}
 }
+
 export default Controller;
