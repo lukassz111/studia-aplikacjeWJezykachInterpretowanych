@@ -13,6 +13,6 @@
         { "category":"motherboard", "name": "ASRock B460 Phantom Gaming 4", "description": "Socket 1200, ATX, DDR4", "price": 399, "weight": 500 },
         { "category":"motherboard", "name": "Gigabyte B450M DS3H", "description": "Socket AM4, mATX, DDR4", "price": 299, "weight": 500 },
         { "category":"motherboard", "name": "Gigabyte B450 AORUS ELITE", "description": "Socket AM4, ATX, DDR4", "price": 439, "weight": 500 },
-        { "category":"motherboard", "name": "AMSI B450 GAMING PLUS MAX", "description": "Socket AM4, ATX, DDR4", "price": 399, "weight": 500 },
+        { "category":"motherboard", "name": "AMSI B450 GAMING PLUS MAX", "description": "Socket AM4, ATX, DDR4", "price": 399, "weight": 500 }
     ]
 }

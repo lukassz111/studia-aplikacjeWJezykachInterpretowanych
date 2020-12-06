@@ -1,10 +1,7 @@
-import { query } from "express"
 import { QueryRunner } from "typeorm"
-import { Query } from "typeorm/driver/Query"
-import { State } from "../entity/State"
-
-class StateQuery {
-    static get listOfAll(): Array<string> {
+import * as data from "./populate_data.json"
+class PopulateData {
+    static get ListOfStates(): Array<string> {
         let list: Array<string> = [
             'NOT_APPROVED',
             'APPROVED',
@@ -13,74 +10,61 @@ class StateQuery {
         ]
         return list
     }
-    static get insertSQL(): Array<string> {
-        let sql: Array<string> = []
-        StateQuery.listOfAll.forEach((el)=>{
-            let s = 'INSERT INTO "state" ("id") VALUES ("'+el+'")'
-            sql.push(s)
-        })
-        return sql
-    }     
-    static get removeSql(): Array<string> {
-        let sql: Array<string> = []
-        StateQuery.listOfAll.forEach((el)=>{
-            let s = 'DELETE FROM "state" WHERE id = "'+el+'"'
-            sql.push(s)
-        })
-        return sql
+    static get ListOfCategory(): Array<string> {
+        return data.category;
     }
-    
-    static up(queryRunner: QueryRunner) {
-        StateQuery.insertSQL.forEach((sql)=> {
-            queryRunner.query(sql)
-        })
-    }
-
-    static down(queryRunner: QueryRunner) {
-        StateQuery.removeSql.forEach((sql)=> {
-            queryRunner.query(sql)
-        })
+    static get ListOfProduct(): Array<any> {
+        return data.product;
     }
 }
 
-class ProductQuery {
-    static get nameOfProducts(): Array<string> {
-        let list: Array<string> = [
-            'NOT_APPROVED',
-            'APPROVED',
-            'CANCELED',
-            'COMPLETED'
-        ]
-        return list
-    }
-    static get insertSQL(): Array<string> {
-        let sql: Array<string> = []
-        return sql
-    }     
-    static get removeSql(): Array<string> {
-        let sql: Array<string> = []
-        return sql
-    }
-    
-    static up(queryRunner: QueryRunner) {
-        StateQuery.insertSQL.forEach((sql)=> {
-            queryRunner.query(sql)
-        })
-    }
+let sqlUp: Array<string> = []
+let sqlDown: Array<string> = []
 
-    static down(queryRunner: QueryRunner) {
-        StateQuery.removeSql.forEach((sql)=> {
-            queryRunner.query(sql)
-        })
-    }
-}
+//States up
+PopulateData.ListOfStates.forEach((el)=>{
+    let s = 'INSERT INTO "state" ("id") VALUES ("'+el+'")'
+    sqlUp.push(s)
+})
+//States down
+PopulateData.ListOfStates.forEach((el)=>{
+    let s = 'DELETE FROM "state" WHERE id = "'+el+'"'
+    sqlDown.push(s)
+})
+//Category up
+PopulateData.ListOfCategory.forEach((el)=> {
+    let s = 'INSERT INTO "category" ("id") VALUES ("'+el+'")'
+    sqlUp.push(s)
+})
+//Category down
+PopulateData.ListOfCategory.forEach((el)=> {
+    let s = 'DELETE FROM "category" WHERE id = "'+el+'"'
+    sqlDown.push(s)
+})
+//Products up
+PopulateData.ListOfProduct.forEach((el)=> {
+    let category: string = el.category
+    let name: string = el.name
+    let description: string = el.description
+    let price: number = el.price
+    let weight: number = el.weight
+    let s = 'INSERT INTO "product" ("name","description","price","weight","categoryId") VALUES('
+    s += `"${name}", "${description}", ${price}, ${weight}, "${category}" )`
+    sqlUp.push(s)    
+})
+//Products down TODO
+
 
 function populateUp(queryRunner: QueryRunner) {
-    StateQuery.up(queryRunner)
+    sqlUp.forEach((sql: string) =>{
+        queryRunner.query(sql);
+    })
 }
 
 function populateDown(queryRunner: QueryRunner) {
-    StateQuery.down(queryRunner)
+    sqlDown.forEach((sql: string) =>{
+        queryRunner.query(sql);
+    })
 }
 
 export { populateUp, populateDown }

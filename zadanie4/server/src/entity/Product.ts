@@ -5,8 +5,8 @@ import { Category } from "./Category"
 export class Product {
     @PrimaryGeneratedColumn()
     id: number = 0
-    @ManyToOne(type => Category, category => category.id)
-    category_id: string = ''
+    @ManyToOne(type => Category, _category => _category.id)
+    category: string = ''
     @Column()
     name: string = ''
     @Column()
