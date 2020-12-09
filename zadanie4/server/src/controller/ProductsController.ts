@@ -21,7 +21,10 @@ class ProductsController extends Controller {
 
     private getList(req: Request, res: Response) {
         DatabaseService.Connection.getRepository(Product).createQueryBuilder().getMany().then((products) => {
-            res.json(products)
+            let json_products = products.map<any>((p)=>{
+                return p.toJson()
+            })
+            res.json(json_products)
         })
     }
     
