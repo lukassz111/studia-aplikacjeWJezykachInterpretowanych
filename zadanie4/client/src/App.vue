@@ -1,5 +1,5 @@
 <template>
-  <md-app md-mode="reveal" md-waterfall="true">
+  <md-app md-mode="reveal">
     <md-app-toolbar class="md-primary">
       <!--
       <md-button class="md-icon-button" @click="showNavigation = !showNavigation">
@@ -24,16 +24,15 @@
   min-height: 100vh;
 }
 </style>
-
-<script lang="ts">
-import Vue from 'vue'
-import ButtonLinkTo from '@/components/ButtonLinkTo.vue'
-export default Vue.extend({
+<script>
+import ButtonLinkTo from './components/ButtonLinkTo'
+export default {
+  name: 'App',
   data: () => ({
-    //showNavigation: false,
+
   }),
   components: {
     ButtonLinkTo
   }
-})
+}
 </script>
