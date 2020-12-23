@@ -19,18 +19,20 @@ class OrdersController extends Controller {
         })
     }
     private getListOrders(req: Request, res: Response) {
+        //TODO implemnet
         DatabaseService.Connection.getRepository(Order).createQueryBuilder().getMany().then((orders) => {
             res.json(orders)
         })
     }
     private addOrder(req: Request, res: Response) {
-
+        //TODO implemnet
     }
     private updateOrderState(req: Request, res: Response, id: string) {
+        //TODO implemnet
 
     }
     private getListOrdersWithState(req: Request, res: Response, stateId: string) {
-
+        //TODO implemnet
     }
 }
 

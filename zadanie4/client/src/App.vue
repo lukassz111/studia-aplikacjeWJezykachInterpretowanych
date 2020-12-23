@@ -14,6 +14,7 @@
 
     <md-app-content>
       <router-view/>
+      <Snackbar/>
     </md-app-content>
   </md-app>
 </template>
@@ -26,13 +27,15 @@
 </style>
 <script>
 import ButtonLinkTo from './components/ButtonLinkTo'
+import Snackbar from './components/Snackbar'
 export default {
   name: 'App',
   data: () => ({
 
   }),
   components: {
-    ButtonLinkTo
+    ButtonLinkTo,
+    Snackbar
   }
 }
 </script>

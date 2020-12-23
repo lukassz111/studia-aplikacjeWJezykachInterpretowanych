@@ -1,5 +1,12 @@
+import { Category } from "@/model/Category"
+import { Observable, AsyncSubject } from "rxjs"
+
+interface UpdateEvent {
+    page: number|null
+}
 abstract class Page<T> {
-    
+    private onUpdateEvent: AsyncSubject<UpdateEvent>
+    public getOnUpdateEvent(): Observable<UpdateEvent> { return this.onUpdateEvent }
     private pages: Map<number,Array<T>>
     protected perPage: number|null
     public get PerPage(): number|null { return this.perPage }
@@ -14,6 +21,7 @@ abstract class Page<T> {
     }
     
     constructor() {
+        this.onUpdateEvent = new AsyncSubject<UpdateEvent>()
         this.perPage = null
         this.countAll = null
         this.pages = new Map<number,Array<T>>();
@@ -36,6 +44,7 @@ abstract class Page<T> {
 
     protected setPage(numberOfPage: number, page: Array<T>) {
         this.pages.set(numberOfPage,page)
+        this.onUpdateEvent.next({"page": numberOfPage})
     }
     protected getPage(numberOfPage: number): Array<T> {
         if(this.pages.has(numberOfPage)) {
@@ -50,6 +59,25 @@ abstract class Page<T> {
     }
     public clear() {
         this.pages.clear()
+        this.onUpdateEvent.next({page:null})
+    }
+
+    public async fetchAll(): Promise<Array<T>> {
+        await this.getPageAsync(0)
+        if(null == this.getLastPage()) {
+            console.log("Cannot fetch all")
+            return []
+        }
+        let lastPage = this.getLastPage() as number
+        for(let i = 1; i < lastPage; i++) {
+            await this.getPageAsync(i)
+        }
+        let listOfAll: Array<T> = []
+        for(let i = 0; i < lastPage; i++) {
+            let p = await this.getPageAsync(i)
+            p.forEach((el)=>{listOfAll.push(el)})
+        }
+        return listOfAll
     }
 
 }

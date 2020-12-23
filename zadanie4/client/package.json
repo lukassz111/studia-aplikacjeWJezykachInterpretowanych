@@ -18,6 +18,7 @@
     "vue-material": "^1.0.0-beta-15",
     "vue-property-decorator": "^8.4.2",
     "vue-router": "^3.2.0",
+    "vuelidate": "^0.7.6",
     "web-request": "^1.0.7"
   },
   "devDependencies": {

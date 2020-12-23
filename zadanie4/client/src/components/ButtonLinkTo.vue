@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import router from '../router/index'
 export default {
   name: 'ButtonLinkTo',
   props: {
@@ -11,7 +12,11 @@ export default {
   },
   methods: {
     go_route() {
-      this.$router.replace({path: this.to})
+      if(router.currentRoute.fullPath != this.to) {
+        router.push(this.to).catch(() => {
+          console.log("redirect")
+        })
+      }
     },
   }
 }

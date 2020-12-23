@@ -9,6 +9,7 @@ class _ApiService {
     }
     private setHeaders(xmlHttpRequest: XMLHttpRequest) {
         xmlHttpRequest.setRequestHeader("Content-Type","application/json")
+        xmlHttpRequest.setRequestHeader("Accept","application/json")
     }
     private formatUrl(url: string): string {
         return this.ApiUrl+url;
@@ -16,9 +17,21 @@ class _ApiService {
 
     async get(url: string): Promise<Response> {
         let req = new XMLHttpRequest()
-        req.open("GET",this.ApiUrl+url,false)
+        req.open("GET",this.formatUrl(url),false)
         this.setHeaders(req)
         req.send(null)
+        let jsonResponse = JSON.parse(req.responseText)
+        return {
+            status: req.status,
+            data: jsonResponse['data'],
+            metadata: jsonResponse['metadata']
+        };
+    }
+    async post(url: string,data: any)/*: Promise<Response>*/ {
+        let req = new XMLHttpRequest()
+        req.open("POST",this.formatUrl(url),false)
+        this.setHeaders(req)
+        req.send(JSON.stringify(data))
         let jsonResponse = JSON.parse(req.responseText)
         return {
             status: req.status,

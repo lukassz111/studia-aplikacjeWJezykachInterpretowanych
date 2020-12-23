@@ -3,19 +3,19 @@ import {Column, PrimaryGeneratedColumn, ManyToOne} from "typeorm"
 import { Category } from "./Category"
 @Entity()
 export class Product {
-    @PrimaryGeneratedColumn()
-    id: number = 0
+    @PrimaryGeneratedColumn("increment")
+    id: number
     @ManyToOne(type => Category, _category => _category.id)
     category: Category
     @Column()
-    name: string = ''
+    name: string
     @Column()
-    description: string = ''
+    description: string
     @Column()
-    price: number = 0
+    price: number
     @Column()
-    weight: number = 0
-
+    weight: number
+    
     public toJson(): any {
         return this
         /*let json = {

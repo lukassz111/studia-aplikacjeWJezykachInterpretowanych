@@ -8,7 +8,7 @@
                 </md-table-row>
                 <md-table-row v-for="(item,index) in items" :key="index">
                     <md-table-cell v-for="c in columnNames" :key="c">
-                        {{items[index][c]}}
+                        {{getTransformFor(c)(items[index][c])}}
                     </md-table-cell>
                 </md-table-row>
             </md-table>
@@ -39,9 +39,23 @@ export default {
           type: Object,
           required: true
       },
+      /**
+       * @type Map<string, string>
+       */
       headerTranslations: {
           type: Object,
           required: true
+      },
+      /**
+       * @type string[]
+       */
+      hiddenColumns: {
+          type: Array,
+          required: true
+      },
+      transforms: {
+          type: Object,
+          required: false
       }
   },
   computed: {
@@ -50,15 +64,17 @@ export default {
               return ['Nie ma nic do wyświetlenia']
           }
           let item = this.items[0]
-          let columnNames = Object.keys(item)
+          let columnNamesOrginal = Object.keys(item)
+          let columnNames = columnNamesOrginal.filter((columnName)=>{
+              return !this.hiddenColumns.includes(columnName)
+          })
           return columnNames
       },
       columnDisplayNames() {
-          if(!this.items.length) {
+          let columnNames = this.columnNames
+          if(!columnNames.length) {
               return ['Nie ma nic do wyświetlenia']
           }
-          let item = this.items[0]
-          let columnNames = Object.keys(item)
           let newColumnDisplayNames = []
           for(let i = 0; i < columnNames.length; i++) {
               if(Object.prototype.hasOwnProperty.call(this.headerTranslations,columnNames[i])) {
@@ -71,7 +87,15 @@ export default {
       }
   },
   methods: {
-      
+      getTransformFor(columnName) {
+          if(this.transforms != null && Object.prototype.hasOwnProperty.call(this.transforms,columnName)) {
+              return this.transforms[columnName]
+          } else {
+              return (value) => {
+                  return value
+              }
+          }
+      },
       disabledPrev() {
           return (this.page < 1)
       },
