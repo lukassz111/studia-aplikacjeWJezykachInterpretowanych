@@ -1,16 +1,33 @@
 import { Request, Response } from "express"
-import Controller from "./Controller";
+import { Util, UtilReq } from "../Util";
+import Controller from "./Controller"
 
+
+
+export enum UserType {
+    Admin = "admin",
+    User = "user"
+}
+export interface User {
+    userType: UserType
+}
 class AuthController extends Controller {
     protected initialize() {
-        this.App.get(this.PathPrefix,(req,res) => {
-            this.get(req,res)
+        this.App.post(this.PathPrefix,(req,res) => {
+            this.post(req,res)
         })
     }
-    private get(req:Request, res:Response) {
-        console.log(req.jwt)
-        res.jwt({"payload":"xddd"})
-        res.json({"xd":"xd"})
+    private post(req:Request, res:Response) {
+        let userType: UserType = req.body.userType
+        if(userType == undefined || userType == null) {
+            userType = UserType.User
+        }
+        console.log(req.body)
+        let user: User = {
+            "userType": userType
+        };
+        res.jwt({"user":user})
+        res.json(UtilReq.createResponse({},user))
     }
 }
 

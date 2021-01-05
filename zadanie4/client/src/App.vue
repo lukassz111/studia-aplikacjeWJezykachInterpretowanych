@@ -6,8 +6,9 @@
         <md-icon>menu</md-icon>
       </md-button>
       -->
-      <ButtonLinkTo to="/" display="Sklep"></ButtonLinkTo>
-      <ButtonLinkTo to="/products" display="Produkty"></ButtonLinkTo>
+      <ButtonLinkTo to="/" display="Sklep" v-display-only="'all'"></ButtonLinkTo>
+      <ButtonLinkTo to="/products" display="Produkty" v-display-only="'admin'"></ButtonLinkTo>
+      <ButtonLogout></ButtonLogout>
     </md-app-toolbar>
 
     <!--<md-app-drawer :md-active.sync="showNavigation" md-swipeable></md-app-drawer>-->
@@ -28,6 +29,8 @@
 <script>
 import ButtonLinkTo from './components/ButtonLinkTo'
 import Snackbar from './components/Snackbar'
+import ButtonLogout from './components/ButtonLogout'
+import './directive/DisplayOnly'
 export default {
   name: 'App',
   data: () => ({
@@ -35,7 +38,8 @@ export default {
   }),
   components: {
     ButtonLinkTo,
-    Snackbar
+    Snackbar,
+    ButtonLogout
   }
 }
 </script>
