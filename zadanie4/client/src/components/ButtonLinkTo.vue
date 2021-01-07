@@ -14,7 +14,7 @@ export default {
     go_route() {
       if(router.currentRoute.fullPath != this.to) {
         router.push(this.to).catch(() => {
-          console.log("redirect")
+          console.log("redirect to: "+this.to)
         })
       }
     },

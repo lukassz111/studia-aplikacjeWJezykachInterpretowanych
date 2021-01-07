@@ -5,7 +5,7 @@ export class Order {
     @PrimaryGeneratedColumn()
     id: number = 0
     @ManyToOne(type => State, _state => _state.id)
-    state: number = 0
+    state: State
     @Column({type: "datetime", nullable: true})
     approveDate: string|null = null
     @Column()

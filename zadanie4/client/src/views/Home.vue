@@ -1,4 +1,3 @@
 <template>
-  <div>Home
-  </div>
+  <div>Redirect</div>
 </template>

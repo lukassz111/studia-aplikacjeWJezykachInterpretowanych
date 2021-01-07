@@ -6,7 +6,7 @@
                 <md-table-row>
                     <md-table-head v-for="c in columnDisplayNames" :key="c">{{c}}</md-table-head>
                 </md-table-row>
-                <md-table-row v-for="(item,index) in items" :key="index">
+                <md-table-row v-for="(item,index) in items" :key="index" v-on:click="onItemClick(index)">
                     <md-table-cell v-for="c in columnNames" :key="c">
                         {{getTransformFor(c)(items[index][c])}}
                     </md-table-cell>
@@ -32,6 +32,11 @@ export default {
       page: 0,
   }},
   props: {
+      onElementClick: {
+          type: Function,
+          required: false,
+          default: null
+      },
       /**
        * @type Page<T>
        */
@@ -87,6 +92,12 @@ export default {
       }
   },
   methods: {
+      onItemClick(index) {
+        if(this.onElementClick != null) {
+            let item = this.items[index]
+            this.onElementClick(item)
+        }
+      },
       getTransformFor(columnName) {
           if(this.transforms != null && Object.prototype.hasOwnProperty.call(this.transforms,columnName)) {
               return this.transforms[columnName]

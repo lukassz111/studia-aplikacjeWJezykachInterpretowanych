@@ -1,14 +1,14 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
-import { populateUp,populateDown } from "../dbutil/populate";
+import { populateDown, populateUp } from "../dbutil/populate";
 
-export class populate1608721957210 implements MigrationInterface {
+export class populate1610027592324 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
-        populateUp(queryRunner)
+        populateUp(queryRunner);
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        populateDown(queryRunner)
+        populateDown(queryRunner);
     }
 
 }

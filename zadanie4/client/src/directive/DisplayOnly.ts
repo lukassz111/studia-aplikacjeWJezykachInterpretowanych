@@ -20,7 +20,6 @@ const directive = Vue.directive('display-only',{
     bind(el: HTMLElement, binding: DirectiveBinding, vnode: VNode, oldVnode: VNode)  {
         let id = display_only_get_id(el)
         let store = StoreDirectivesService.getStore(id)
-        console.log(el)
         store.s = AuthService.OnUserStateChanged.subscribe(()=>{
             let v = binding.value
             let loggedAs = AuthService.user()

@@ -7,7 +7,7 @@
       </md-button>
       -->
       <ButtonLinkTo to="/" display="Sklep" v-display-only="'all'"></ButtonLinkTo>
-      <ButtonLinkTo to="/products" display="Produkty" v-display-only="'admin'"></ButtonLinkTo>
+      <ButtonLinkTo to="/products_add" display="Dodaj produkt" v-display-only="'admin'"></ButtonLinkTo>
       <ButtonLogout></ButtonLogout>
     </md-app-toolbar>
 

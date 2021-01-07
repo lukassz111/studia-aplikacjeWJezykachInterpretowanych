@@ -1,14 +1,12 @@
 <template>
   <div>
-    <TablePagination :pagesObject="pagesObject" :headerTranslations="tableTranslations" :hiddenColumns="['id']" :transforms="tableTransforms"></TablePagination>
-    <ProductAdd v-if="isUserLoggedIn()"></ProductAdd>
+    <TablePagination :pagesObject="pagesObject" :headerTranslations="tableTranslations" :hiddenColumns="['id']" :transforms="tableTransforms" :onElementClick="onElementClick"></TablePagination>
   </div>
 </template>
 
 <script>
 import { ProductService } from '../services/ProductService'
 import { AuthService } from '../services/AuthService'
-import ProductAdd from '../components/ProductAdd'
 import TablePagination from './../components/TablePagination'
 export default {
   name: 'Products',
@@ -28,6 +26,9 @@ export default {
   methods: {
     isUserLoggedIn() {
       return AuthService.isUserLoggedIn()
+    },
+    onElementClick(item) {
+      console.log(item)
     }
   },
   computed: {
@@ -36,8 +37,7 @@ export default {
     }
   },
   components: {
-    TablePagination,
-    ProductAdd
+    TablePagination
   }
 }
 </script>
