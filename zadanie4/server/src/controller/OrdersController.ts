@@ -33,7 +33,12 @@ class OrdersController extends Controller {
                 UtilReq.responseAddOrUpdateFailureClient(res)
                 return
             }
+            if(!Object.prototype.hasOwnProperty.call(req.body,'phoneNumber')){
+                UtilReq.responseAddOrUpdateFailureClient(res)
+                return
+            }
             let ids = req.body['ids'] as Array<number>
+            let phoneNumber = req.body['phoneNumber'] as string
             let productsAwait: Array<Promise<Array<Product>>> = []
             for(var i = 0; i < ids.length; i++) {
                 let id = ids[i]
@@ -58,7 +63,7 @@ class OrdersController extends Controller {
             let notApprovedState = await DatabaseService.Connection.getRepository(State).createQueryBuilder().select().where('id = "NOT_APPROVED"').getMany()[0]
             let newOrder = new Order()
             newOrder.approveDate = null
-            newOrder.phone_number = '797566668'
+            newOrder.phone_number = phoneNumber
             newOrder.state = notApprovedState
             newOrder.products = products
             let order = await DatabaseService.Connection.getRepository(Order).save(newOrder)

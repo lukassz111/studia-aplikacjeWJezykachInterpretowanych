@@ -65,7 +65,10 @@ export default {
   },
   computed: {
       columnNames() {
-          if(!this.items.length) {
+          if(this.pagesObject == null) {
+              return ['Nie ma nic do wyświetlenia']
+          }
+          else if(!this.items.length) {
               return ['Nie ma nic do wyświetlenia']
           }
           let item = this.items[0]
