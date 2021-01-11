@@ -14,14 +14,14 @@ export default {
       logInAsUser() {
         AuthService.logInAsUser().then(()=>{
           router.push('/').catch(() => {
-            console.log("redirect")
+            //console.log("redirect")
           })
         })
       },
       logInAsAdmin() {
         AuthService.logInAsAdmin().then(()=>{
           router.push('/').catch(() => {
-            console.log("redirect")
+            //console.log("redirect")
           })
         })
       }

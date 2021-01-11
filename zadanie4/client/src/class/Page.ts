@@ -1,10 +1,11 @@
 import { Category } from "@/model/Category"
 import { Observable, AsyncSubject } from "rxjs"
+import { IPageRead } from "./IPage"
 
 interface UpdateEvent {
     page: number|null
 }
-abstract class Page<T> {
+abstract class Page<T> implements IPageRead<T>{
     private onUpdateEvent: AsyncSubject<UpdateEvent>
     public getOnUpdateEvent(): Observable<UpdateEvent> { return this.onUpdateEvent }
     private pages: Map<number,Array<T>>
@@ -80,6 +81,10 @@ abstract class Page<T> {
         return listOfAll
     }
 
+    public async fetchAllAndFilter(checkCallback: (item: T) => boolean): Promise<Array<T>> {
+        let items = await this.fetchAll()
+        return items.filter((value: T) => checkCallback(value))
+    }
 }
 
 abstract class PageWithExpiry<T> extends Page<T> {

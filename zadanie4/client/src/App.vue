@@ -8,6 +8,7 @@
       -->
       <ButtonLinkTo to="/" display="Sklep" v-display-only="'all'"></ButtonLinkTo>
       <ButtonLinkTo to="/products_add" display="Dodaj produkt" v-display-only="'admin'"></ButtonLinkTo>
+      <ButtonLinkTo to="/orders_add" display="Koszyk" v-display-only="'user'"></ButtonLinkTo>
       <ButtonLogout></ButtonLogout>
     </md-app-toolbar>
 

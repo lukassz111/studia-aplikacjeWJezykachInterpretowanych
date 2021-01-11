@@ -37,6 +37,11 @@ class Meta implements IMeta {
     x.user = false;
     return x;
   }
+  static everyoneLoggedUser(redirect: string = Meta.default_redirect): Meta {
+    let x = this.everyoneLogged(redirect);
+    x.admin = false;
+    return x;
+  }
   admin: boolean = true;
   user: boolean = true;
   not_logged: boolean = true;
@@ -52,7 +57,6 @@ class Meta implements IMeta {
       admin_redirect: this.admin_redirect,
       user_redirect: this.user_redirect
     }
-    console.log(x);
     return x;
   }
 }
@@ -64,7 +68,7 @@ const routes: Array<RouteConfig> = [
     meta: (() => {
       let meta = Meta.everyoneLogged('/login')
       meta.admin_redirect = '/products'
-      meta.user_redirect = '/products'
+      meta.user_redirect = '/products_user'
       return meta.staticObject()
     })()
   },
@@ -81,10 +85,22 @@ const routes: Array<RouteConfig> = [
     meta: Meta.everyoneLogged('/login').staticObject()
   },
   {
+    path: '/products_user',
+    name: 'ProductsUser',
+    component: () => import(/* webpackChunkName: "products" */ '../views/ProductsUser.vue'),
+    meta: Meta.everyoneLoggedUser('/login').staticObject()
+  },
+  {
     path: '/products_add',
     name: 'Products_Add',
     component: () => import(/* webpackChunkName: "products" */ '../views/AddProduct.vue'),
     meta: Meta.everyoneLoggedAdmin('/').staticObject()
+  },
+  {
+    path: '/orders_add',
+    name: 'Orders_Add',
+    component: () => import(/* webpackChunkName: "products" */ '../views/AddOrder.vue'),
+    meta: Meta.everyoneLoggedUser('/').staticObject()
   }
 ]
 
@@ -92,18 +108,18 @@ const router = new VueRouter({
   routes
 })
 router.beforeEach((to: Route,from: Route,next:NavigationGuardNext<Vue>) => {
-  const redirectFunc = (meta: IMeta, t: Route, f: Route) => {
-    //console.log({from:f.fullPath, to: to.fullPath, redirect: meta.redirect})
-    next({ path: meta.redirect})
+  const redirectFunc = (path: string, t: Route, f: Route) => {
+    console.log({from:f.fullPath, to: to.fullPath, redirect: path})
+    next({ path: path})
   } 
   let meta: IMeta = to.meta
   let logged = AuthService.isUserLoggedIn();
   if(logged) {
     if(AuthService.user()?.userType == UserType.Admin && meta.admin_redirect != null) {
-      next({ path: meta.admin_redirect })
+      redirectFunc(meta.admin_redirect,to,from)
     }
     else if(AuthService.user()?.userType == UserType.User && meta.user_redirect != null) {
-      next({ path: meta.user_redirect })
+      redirectFunc(meta.user_redirect,to,from)
     }
     else if(meta.admin && AuthService.user()?.userType == UserType.Admin) {
       next()
@@ -112,14 +128,14 @@ router.beforeEach((to: Route,from: Route,next:NavigationGuardNext<Vue>) => {
       next()
     }
     else {
-      redirectFunc(meta,to,from)
+      redirectFunc(meta.redirect,to,from)
     }
   } else {
     if(meta.not_logged) {
       next()
     }
     else {
-      redirectFunc(meta,to,from)
+      redirectFunc(meta.redirect,to,from)
     }
   }
 })

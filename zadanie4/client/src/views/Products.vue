@@ -20,7 +20,15 @@ export default {
       category:"Kategoria"
     },
     tableTransforms: {
-      category: (value) => { return value.id }
+      category: (value) => { return value.id },
+      price: (value) => { return value+" zł" },
+      weight: (value) => {
+        if(value >= 500) {
+          return (value/1000)+ " kg"
+        } else {
+          return value + " g"
+        }
+      }
     }
   }),
   methods: {

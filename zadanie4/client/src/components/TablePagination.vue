@@ -1,5 +1,4 @@
 <template>
-
     <md-card>
         <md-card-content>
             <md-table>
@@ -14,10 +13,10 @@
             </md-table>
         </md-card-content>
         <md-card-actions>
-        <md-button v-on:click="prevPage" :disabled="disabledPrev()">
+        <md-button v-if="!hidePageButtons" v-on:click="prevPage" :disabled="disabledPrev()">
             <md-icon>arrow_back_ios</md-icon>
         </md-button>
-        <md-button v-on:click="nextPage" :disabled="disabledNext()">
+        <md-button v-if="!hidePageButtons" v-on:click="nextPage" :disabled="disabledNext()">
             <md-icon>arrow_forward_ios</md-icon>
         </md-button>
       </md-card-actions>
@@ -29,6 +28,7 @@ export default {
   name: 'TablePagination',
   data() { return {
       items: [],
+      hidePageButtons: false,
       page: 0,
   }},
   props: {
@@ -120,6 +120,7 @@ export default {
       refreshPage() {
         this.pagesObject.getPageAsync(this.page).then((items)=>{
             this.items = items;
+            this.hidePageButtons = (this.pagesObject.getLastPage() == 0) ? true : false;
         })
       },
       nextPage() {
@@ -133,12 +134,16 @@ export default {
   },
   created() {
       this.pagesObject.getPageAsync(this.page).then((items)=>{
-          this.items = items;
+        this.items = items
+        this.hidePageButtons = (this.pagesObject.getLastPage() == 0) ? true : false;
       })
   }
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+    .md-card {
+        box-shadow: initial !important;
+    }
 </style>
 
