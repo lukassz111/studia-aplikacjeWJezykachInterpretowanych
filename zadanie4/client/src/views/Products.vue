@@ -1,43 +1,19 @@
 <template>
-  <div>
-    <TablePagination :pagesObject="pagesObject" :headerTranslations="tableTranslations" :hiddenColumns="['id']" :transforms="tableTransforms" :onElementClick="onElementClick"></TablePagination>
-  </div>
+  <md-card>
+    <md-card-content>
+      <TablePaginationProduct :pagesObject="pagesObject"></TablePaginationProduct>
+    </md-card-content>
+  </md-card>
 </template>
 
 <script>
 import { ProductService } from '../services/ProductService'
-import { AuthService } from '../services/AuthService'
-import TablePagination from './../components/TablePagination'
+import TablePaginationProduct from './../components/TablePaginationProduct'
 export default {
   name: 'Products',
   data: () => ({
-    tableTranslations: {
-      id:"ID",
-      name:"Nazwa",
-      description:"Opis",
-      price:"Cena",
-      weight:"Waga",
-      category:"Kategoria"
-    },
-    tableTransforms: {
-      category: (value) => { return value.id },
-      price: (value) => { return value+" zł" },
-      weight: (value) => {
-        if(value >= 500) {
-          return (value/1000)+ " kg"
-        } else {
-          return value + " g"
-        }
-      }
-    }
   }),
   methods: {
-    isUserLoggedIn() {
-      return AuthService.isUserLoggedIn()
-    },
-    onElementClick(item) {
-      console.log(item)
-    }
   },
   computed: {
     pagesObject: () => {
@@ -45,7 +21,7 @@ export default {
     }
   },
   components: {
-    TablePagination
+    TablePaginationProduct
   }
 }
 </script>

@@ -82,7 +82,7 @@ const routes: Array<RouteConfig> = [
     path: '/products',
     name: 'Products',
     component: () => import(/* webpackChunkName: "products" */ '../views/Products.vue'),
-    meta: Meta.everyoneLogged('/login').staticObject()
+    meta: Meta.everyoneLoggedAdmin('/login').staticObject()
   },
   {
     path: '/products_user',
@@ -107,6 +107,12 @@ const routes: Array<RouteConfig> = [
     name: 'Orders_User',
     component: () => import(/* webpackChunkName: "products" */ '../views/OrdersUser.vue'),
     meta: Meta.everyoneLoggedUser('/').staticObject()
+  },
+  {
+    path: '/orders_admin',
+    name: 'Orders_Admin',
+    component: () => import(/* webpackChunkName: "products" */ '../views/OrdersAdmin.vue'),
+    meta: Meta.everyoneLoggedAdmin('/').staticObject()
   }
 ]
 

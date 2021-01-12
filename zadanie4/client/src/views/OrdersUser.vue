@@ -67,6 +67,12 @@ export default {
       switch(value){
         case 'NOT_APPROVED':
           return "Nie zatwierdzono"
+        case 'APPROVED':
+          return "Zatwierdzono"
+        case 'CANCELED':
+          return "Anulowano"
+        case 'COMPLETED':
+          return "Zakończono"
       }
       return value
     },

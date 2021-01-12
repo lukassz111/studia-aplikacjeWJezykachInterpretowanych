@@ -1,20 +1,13 @@
 <template>
   <md-app md-mode="reveal">
     <md-app-toolbar class="md-primary">
-      <!--
-      <md-button class="md-icon-button" @click="showNavigation = !showNavigation">
-        <md-icon>menu</md-icon>
-      </md-button>
-      -->
       <ButtonLinkTo to="/" display="Sklep" v-display-only="'all'"></ButtonLinkTo>
       <ButtonLinkTo to="/products_add" display="Dodaj produkt" v-display-only="'admin'"></ButtonLinkTo>
       <ButtonLinkTo to="/orders_add" display="Koszyk" v-display-only="'user'"></ButtonLinkTo>
       <ButtonLinkTo to="/orders_user" display="Zamówienia" v-display-only="'user'"></ButtonLinkTo>
+      <ButtonLinkTo to="/orders_admin" display="Zamówienia" v-display-only="'admin'"></ButtonLinkTo>
       <ButtonLogout></ButtonLogout>
     </md-app-toolbar>
-
-    <!--<md-app-drawer :md-active.sync="showNavigation" md-swipeable></md-app-drawer>-->
-
     <md-app-content>
       <router-view/>
       <Snackbar/>

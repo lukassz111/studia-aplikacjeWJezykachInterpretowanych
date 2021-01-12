@@ -4,6 +4,7 @@
         :headerTranslations="tableTranslations"
         :hiddenColumns="['id']"
         :transforms="tableTransforms"
+        :rerender="rerender"
         :onElementClick="onElementClick">
     </TablePagination>
 </template>
@@ -34,6 +35,11 @@ export default {
     }
   }},
   props: {
+      rerender: {
+          type: Number,
+          required: false,
+          default: () => { return 0 }
+      },
       onElementClick: {
           type: Function,
           required: false,

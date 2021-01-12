@@ -187,5 +187,14 @@ class _OrderService {
         }
         return new StaticPage<Product>(products)
     }
+    public async updateState(order: Order, state: string) {
+        this.AllOrders.clear()
+        this.ApprovedOrders.clear()
+        this.NotApprovedOrders.clear()
+        this.CanceledOrders.clear()
+        this.CompletedOrders.clear()
+        let x = await ApiService.put('/orders/'+order.id+'/state',{"state":state})
+        return x
+    }
 }
 export const OrderService = new _OrderService()

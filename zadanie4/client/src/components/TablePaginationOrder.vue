@@ -4,6 +4,7 @@
         :headerTranslations="tableTranslations"
         :hiddenColumns="[]"
         :transforms="tableTransforms"
+        :rerender="rerender"
         :onElementClick="onElementClick">
     </TablePagination>
 </template>
@@ -29,15 +30,26 @@ export default {
         }
       },
       state: (value) => {
-          switch(value) {
-              case 'NOT_APPROVED':
-                  return "Nie zatwierdzono"
-          }
+          switch(value){
+            case 'NOT_APPROVED':
+                return "Nie zatwierdzono"
+            case 'APPROVED':
+                return "Zatwierdzono"
+            case 'CANCELED':
+                return "Anulowano"
+            case 'COMPLETED':
+                return "Zakończono"
+            }
           return value
       }
     }
   }},
   props: {
+      rerender: {
+          type: Number,
+          required: false,
+          default: () => { return 0 }
+      },
       onElementClick: {
           type: Function,
           required: false,

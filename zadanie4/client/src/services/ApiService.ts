@@ -39,6 +39,18 @@ class _ApiService {
             metadata: jsonResponse['metadata']
         };
     }
+    async put(url: string,data: any)/*: Promise<Response>*/ {
+        let req = new XMLHttpRequest()
+        req.open("PUT",this.formatUrl(url),false)
+        this.setHeaders(req)
+        req.send(JSON.stringify(data))
+        let jsonResponse = JSON.parse(req.responseText)
+        return {
+            status: req.status,
+            data: jsonResponse['data'],
+            metadata: jsonResponse['metadata']
+        };
+    }
 }
 
 const ApiService: _ApiService = new _ApiService()

@@ -31,7 +31,21 @@ export default {
       hidePageButtons: false,
       page: 0,
   }},
+  watch: {
+      rerender() {
+          console.log("refresh")
+      this.pagesObject.getPageAsync(this.page).then((items)=>{
+        this.items = items
+        this.hidePageButtons = (this.pagesObject.getLastPage() == 0) ? true : false;
+      })
+      }
+  },
   props: {
+      rerender: {
+          type: Number,
+          required: false,
+          default: () => { return 0 }
+      },
       onElementClick: {
           type: Function,
           required: false,

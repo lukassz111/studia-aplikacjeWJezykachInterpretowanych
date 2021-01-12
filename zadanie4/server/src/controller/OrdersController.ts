@@ -116,8 +116,29 @@ class OrdersController extends Controller {
         x()
     }
     private updateOrderState(req: Request, res: Response, id: string) {
-        //TODO implement
+        let x = async () => {
+            if(!Object.prototype.hasOwnProperty.call(req.body,'state')) {
+                UtilReq.responseAddOrUpdateFailureClient(res)
+                return
+            }
+            let newState = req.body.state
+            let orderRepository = DatabaseService.Connection.getRepository(Order)
+            let orders = await orderRepository.find({
+                where: '"order"."id" = '+id,
+                relations: ['products']
+            })
+            if(orders.length <= 0) {
+                UtilReq.responseAddOrUpdateFailureClient(res)
+                return
+            }
+            let order = orders[0]
+            
+            order.state = newState
+            let savedOrder = await DatabaseService.Connection.getRepository(Order).save(order)
 
+            UtilReq.responseAddOrUpdateSuccess(res,savedOrder)
+        }
+        x()
     }
     private getListWithState(req: Request, res: Response,page:number, stateId: string) {
         let perPage: number = ConfigService.Config['perPage']
