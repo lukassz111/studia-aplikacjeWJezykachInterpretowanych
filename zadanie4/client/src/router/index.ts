@@ -101,6 +101,12 @@ const routes: Array<RouteConfig> = [
     name: 'Orders_Add',
     component: () => import(/* webpackChunkName: "products" */ '../views/AddOrder.vue'),
     meta: Meta.everyoneLoggedUser('/').staticObject()
+  },
+  {
+    path: '/orders_user',
+    name: 'Orders_User',
+    component: () => import(/* webpackChunkName: "products" */ '../views/OrdersUser.vue'),
+    meta: Meta.everyoneLoggedUser('/').staticObject()
   }
 ]
 

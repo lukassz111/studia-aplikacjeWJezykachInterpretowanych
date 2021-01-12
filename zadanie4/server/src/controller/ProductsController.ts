@@ -1,4 +1,5 @@
 import { Request, Response } from "express"
+import { SelectQueryBuilder } from "typeorm";
 import { Product } from "../entity/Product";
 import { jwt_middleware } from "../jwt";
 import { ConfigService } from "../service/ConfigService";
@@ -13,7 +14,7 @@ class ProductsController extends Controller {
             this.getList(req,res,page)
         })
         this.App.get(this.PathPrefix+'/:id',(req,res)=> {
-            this.getElement(req,res,req.params['id'])
+            this.getElement(req,res,parseInt(req.params['id']))
         })
         this.App.post(this.PathPrefix,(req,res)=> {
             this.addElement(req,res)
@@ -37,8 +38,16 @@ class ProductsController extends Controller {
         x()
     }
     
-    private getElement(req: Request, res: Response, id: string) {
-        //TODO get element
+    private getElement(req: Request, res: Response, id: number) {
+        let x = async () => {
+            let count = await DatabaseService.Connection.getRepository(Product).createQueryBuilder().getCount()
+            let products = await DatabaseService.Connection.getRepository(Product).createQueryBuilder().where('"product"."id" = '+id).loadAllRelationIds().getMany()
+            let json_products = products.map<any>((p)=>{
+                return p.toJson()
+            })
+            res.json(UtilReq.createResponseList(count,1,json_products))
+        }
+        x()
     }
 
     private addElement(req: Request, res: Response) {

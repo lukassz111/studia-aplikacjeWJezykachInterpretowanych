@@ -1,9 +1,34 @@
+import { IPageRead } from "@/class/IPage"
 import { PageWithExpiry } from "@/class/Page"
 import { Product } from "@/model/Product"
 import { ApiService, Response } from "./ApiService"
 import { SnackbarService } from "./SnackbarService"
 
 
+
+class ReadPageProduct implements IPageRead<Product> {
+    getLastPage(): number | null {
+        return null
+    }
+    getPageAsync(numberOfPage: number): Promise<Product[]> {
+        let url = "/products/"+numberOfPage
+        return ApiService.get(url).then((value: Response)=> {
+            let dataArray: Array<any> = value.data as Array<any>
+            let data = dataArray[0]
+            let dataOrder: Product = {
+                id: data.id,
+                category: {
+                    id: data.category
+                },
+                name: data.name,
+                description: data.description,
+                price: data.price,
+                weight: data.weight,
+            }
+            return [dataOrder]
+        })
+    }
+}
 class PageProduct extends PageWithExpiry<Product> {
     protected fetch(numberOfPage: number): Promise<Array<Product>> {
         let url = "/products?page="+numberOfPage
@@ -32,11 +57,13 @@ class PageProduct extends PageWithExpiry<Product> {
     }
 }
 class _ProductService {
-
     private products: PageProduct
+    private productById: ReadPageProduct
     public get Products(): PageProduct { return this.products }
+    public get ProductById(): ReadPageProduct { return this.productById }
     constructor() {
         this.products = new PageProduct()
+        this.productById = new ReadPageProduct()
     }
     public async addProduct(product: Product): Promise<Product|null> {
         let url = "/products"

@@ -5,8 +5,8 @@ import {State} from './State'
 export class Order {
     @PrimaryGeneratedColumn('increment')
     id: number
-    @ManyToOne(() => State, _state => _state.id)
-    state: State
+    @Column()
+    state: string
     @Column({type: "datetime", nullable: true})
     approveDate: string|null = null
     @Column()

@@ -2,14 +2,20 @@ import { Request, Response, Application } from "express"
 import { Order } from "../entity/Order";
 import { Product } from "../entity/Product";
 import { State } from "../entity/State";
+import { ConfigService } from "../service/ConfigService";
 import DatabaseService from "../service/DatabaseService";
-import { UtilReq } from "../Util";
+import { Util, UtilReq } from "../Util";
 import Controller from "./Controller";
 
 class OrdersController extends Controller {
     protected initialize() {
         this.App.get(this.PathPrefix,(req,res) => {
-            this.getListOrders(req,res)
+            let page = Util.getUrlParamInt(req,'page',0)
+            this.getList(req,res,page)
+        })
+        this.App.get(this.PathPrefix+'/:id',(req,res) => {
+            let id = parseInt(req.params['id'])
+            this.getElement(req,res,id)
         })
         this.App.post(this.PathPrefix,(req,res) => {
             this.addOrder(req,res)
@@ -18,14 +24,53 @@ class OrdersController extends Controller {
             this.updateOrderState(req,res,req.params['id'])
         })
         this.App.get(this.PathPrefix+'/state/:sateId',(req,res)=> {
-            this.getListOrdersWithState(req,res,req.params['sateId'])
+            let page = Util.getUrlParamInt(req,'page',0)
+            let stateId = req.params['sateId']
+            this.getListWithState(req,res,page,stateId)
         })
     }
-    private getListOrders(req: Request, res: Response) {
-        //TODO implement
-        DatabaseService.Connection.getRepository(Order).createQueryBuilder().getMany().then((orders) => {
-            res.json(orders)
-        })
+    private getList(req: Request, res: Response,page:number) {
+        let perPage: number = ConfigService.Config['perPage']
+        let startIndex = page*perPage
+        let x = async () => {
+            let count = await DatabaseService.Connection.getRepository(Order).createQueryBuilder().getCount()
+            let orders = await DatabaseService.Connection.getRepository(Order).createQueryBuilder().offset(startIndex).limit(perPage).getMany()
+            let json_orders = orders.map<any>((p)=>{
+                return p
+            })
+            res.json(UtilReq.createResponseList(count,perPage,json_orders))
+        }
+        x()
+    }
+    private getElement(req: Request, res: Response,id:number) {
+        let x = async () => {
+            
+            let count = await DatabaseService.Connection.getRepository(Order).createQueryBuilder().getCount()
+            let orderRepository = DatabaseService.Connection.getRepository(Order)
+            let orders = await orderRepository.find({
+                where: '"order"."id" = '+id,
+                relations: ['products']
+            })
+            //let orders = orderRepository.//.where('id = '+id).getMany()
+            if(orders.length <= 0) {
+                res.json(UtilReq.createResponseList(count,1,[]))
+                return
+            }
+            let order = orders[0]
+            let productsIds: Array<number> = []
+            order.products.forEach((x)=> {
+                productsIds.push(x.id)
+            })
+            let json_order = {
+                "approveDate":order.approveDate,
+                "phone_number":order.phone_number,
+                "id":order.id,
+                "state":order.state,
+                "products": productsIds
+            }
+            res.json(UtilReq.createResponseList(count,1,[json_order]))
+        }
+        x()
     }
     private addOrder(req: Request, res: Response) {
         let x = async () => {
@@ -60,11 +105,10 @@ class OrdersController extends Controller {
                 UtilReq.responseAddOrUpdateFailureClient(res)
                 return
             }
-            let notApprovedState = await DatabaseService.Connection.getRepository(State).createQueryBuilder().select().where('id = "NOT_APPROVED"').getMany()[0]
             let newOrder = new Order()
             newOrder.approveDate = null
             newOrder.phone_number = phoneNumber
-            newOrder.state = notApprovedState
+            newOrder.state = 'NOT_APPROVED'
             newOrder.products = products
             let order = await DatabaseService.Connection.getRepository(Order).save(newOrder)
             UtilReq.responseAddOrUpdateSuccess(res,{order: order})
@@ -75,8 +119,18 @@ class OrdersController extends Controller {
         //TODO implement
 
     }
-    private getListOrdersWithState(req: Request, res: Response, stateId: string) {
-        //TODO implement
+    private getListWithState(req: Request, res: Response,page:number, stateId: string) {
+        let perPage: number = ConfigService.Config['perPage']
+        let startIndex = page*perPage
+        let x = async () => {
+            let count = await DatabaseService.Connection.getRepository(Order).createQueryBuilder().where('"Order"."state" = "'+stateId+'"').getCount()
+            let orders = await DatabaseService.Connection.getRepository(Order).createQueryBuilder().where('"Order"."state" = "'+stateId+'"').offset(startIndex).limit(perPage).getMany()
+            let json_orders = orders.map<any>((p)=>{
+                return p
+            })
+            res.json(UtilReq.createResponseList(count,perPage,json_orders))
+        }
+        x()
     }
 }
 
